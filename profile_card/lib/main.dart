@@ -34,12 +34,12 @@ class ProfileCardPage extends StatelessWidget {
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
+          constraints: const BoxConstraints(maxWidth: 480),
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             // 整张名片：白底、圆角、阴影、内边距
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+              padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -60,17 +60,17 @@ class ProfileCardPage extends StatelessWidget {
                     clipBehavior: Clip.none,
                     children: [
                       const CircleAvatar(
-                        radius: 44,
+                        radius: 48,
                         backgroundColor: Color(0xFFE3E9FF),
                         child: Icon(
                           Icons.person,
-                          size: 48,
+                          size: 52,
                           color: Color(0xFF4C6FFF),
                         ),
                       ),
                       Positioned(
                         right: 2,
-                        bottom: 4,
+                        bottom: 6,
                         child: Container(
                           width: 16,
                           height: 16,
@@ -88,7 +88,7 @@ class ProfileCardPage extends StatelessWidget {
                   const Text(
                     '林金豪',
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF1F2430),
                     ),
@@ -197,7 +197,7 @@ class _TagLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: const Color(0xFFEEF2FF),
         borderRadius: BorderRadius.circular(999),
