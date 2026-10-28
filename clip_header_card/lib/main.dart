@@ -1,122 +1,270 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ClipHeaderApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ClipHeaderApp extends StatelessWidget {
+  const ClipHeaderApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'clip_header_card',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        colorSchemeSeed: const Color(0xFF2F6BFF),
+        scaffoldBackgroundColor: const Color(0xFFF1F3F8),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const ClipHeaderPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class ClipHeaderPage extends StatelessWidget {
+  const ClipHeaderPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text('ClipPath 异形头图'),
+        centerTitle: true,
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 760),
+          child: ListView(
+            padding: const EdgeInsets.all(24),
+            children: [
+              const _IntroCard(),
+              const SizedBox(height: 20),
+              _ClipCard(
+                title: '斜切角头图',
+                subtitle: 'clipPath: _DiagonalClipper(24)',
+                clipper: _DiagonalClipper(24),
+                colors: const [Color(0xFF2F6BFF), Color(0xFF7C5CFF)],
+                icon: Icons.auto_awesome,
+                height: 190,
+              ),
+              const SizedBox(height: 20),
+              _ClipCard(
+                title: '波浪底边头图',
+                subtitle: 'clipPath: _WaveClipper()',
+                clipper: _WaveClipper(),
+                colors: const [Color(0xFF13B58A), Color(0xFF3BD5C0)],
+                icon: Icons.waves,
+                height: 200,
+              ),
+              const SizedBox(height: 20),
+              _ClipCard(
+                title: '底部内凹弧形',
+                subtitle: 'clipPath: _InwardArcClipper()',
+                clipper: _InwardArcClipper(),
+                colors: const [Color(0xFFFF8B3D), Color(0xFFFFC24B)],
+                icon: Icons.local_fire_department,
+                height: 190,
+              ),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
+}
+
+class _IntroCard extends StatelessWidget {
+  const _IntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '独立研究任务（三）· 自定义剪裁',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF1F2430),
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            '同一个头图容器，用三个不同的 CustomClipper<Path> 剪出三种形状。'
+            '每个 clipper 只重写 getClip，shouldReclip 统一返回 false。',
+            style: TextStyle(fontSize: 13, height: 1.7, color: Color(0xFF5A6173)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ClipCard extends StatelessWidget {
+  const _ClipCard({
+    required this.title,
+    required this.subtitle,
+    required this.clipper,
+    required this.colors,
+    required this.icon,
+    required this.height,
+  });
+
+  final String title;
+  final String subtitle;
+  final CustomClipper<Path> clipper;
+  final List<Color> colors;
+  final IconData icon;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x14000000),
+            blurRadius: 18,
+            offset: Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 头图区域：ClipPath 作用在这一层
+          ClipPath(
+            clipper: clipper,
+            child: Container(
+              height: height,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: colors,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 28, 24, 46),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(icon, color: Colors.white, size: 30),
+                    const SizedBox(height: 10),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(24, 6, 24, 20),
+            child: Text(
+              '头图本身是一个普通 Container，形状全部由 clipper 决定，'
+              '角上的半透明圆环也是被剪裁过的内容。',
+              style: TextStyle(fontSize: 12.5, height: 1.7, color: Color(0xFF7A8194)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// 右下角斜切：底边从 70% 处斜向右下，切掉一个三角函数状的角。
+class _DiagonalClipper extends CustomClipper<Path> {
+  _DiagonalClipper(this.cut);
+
+  final double cut;
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.moveTo(0, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height - cut);
+    path.lineTo(size.width * 0.62, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant _DiagonalClipper oldClipper) => false;
+}
+
+/// 波浪底边：用两段二次贝塞尔拼出一条平滑波纹。
+class _WaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height - 18);
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      size.height - 46,
+      size.width * 0.5,
+      size.height - 18,
+    );
+    path.quadraticBezierTo(
+      size.width * 0.75,
+      size.height + 8,
+      size.width,
+      size.height - 22,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+}
+
+/// 底部内凹弧：底边向卡片内部凹进去一段。
+class _InwardArcClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.quadraticBezierTo(
+      size.width * 0.5,
+      size.height - 52,
+      0,
+      size.height,
+    );
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
