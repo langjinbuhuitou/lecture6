@@ -116,9 +116,9 @@ class _FlexRow extends StatelessWidget {
                     child: i == 1 && overflowDemo
                         ? Row(
                             children: [
-                              for (var k = 0; k < 4; k++)
+                              for (var k = 0; k < 5; k++)
                                 Container(
-                                  width: 52,
+                                  width: 64,
                                   height: 22,
                                   margin: const EdgeInsets.only(right: 4),
                                   decoration: BoxDecoration(
