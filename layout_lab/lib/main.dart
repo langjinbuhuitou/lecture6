@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'sections/alignment_section.dart';
 import 'sections/flex_section.dart';
+import 'sections/stack_section.dart';
 
 void main() {
   runApp(const LayoutLabApp());
@@ -45,6 +46,8 @@ class LayoutLabPage extends StatelessWidget {
               AlignmentSection(),
               SizedBox(height: 20),
               FlexSection(),
+              SizedBox(height: 20),
+              StackSection(),
               SizedBox(height: 8),
             ],
           ),
