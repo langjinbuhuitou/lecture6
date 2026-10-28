@@ -142,10 +142,11 @@ class _ClipCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 头图区域：ClipPath 作用在这一层
+          // 头图区域：ClipPath 作用在这一层，宽度撑满卡片
           ClipPath(
             clipper: clipper,
             child: Container(
+              width: double.infinity,
               height: height,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -187,8 +188,8 @@ class _ClipCard extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.fromLTRB(24, 6, 24, 20),
             child: Text(
-              '头图本身是一个普通 Container，形状全部由 clipper 决定，'
-              '角上的半透明圆环也是被剪裁过的内容。',
+              '头图本身是一个普通 Container，形状全部由 clipper 决定；'
+              '换成别的 clipper，同一张卡片立刻换了个轮廓。',
               style: TextStyle(fontSize: 12.5, height: 1.7, color: Color(0xFF7A8194)),
             ),
           ),
