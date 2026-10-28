@@ -42,11 +42,11 @@ class ClipHeaderPage extends StatelessWidget {
               const SizedBox(height: 20),
               _ClipCard(
                 title: '斜切角头图',
-                subtitle: 'clipPath: _DiagonalClipper(24)',
-                clipper: _DiagonalClipper(24),
+                subtitle: 'clipPath: _DiagonalClipper(56)',
+                clipper: _DiagonalClipper(56),
                 colors: const [Color(0xFF2F6BFF), Color(0xFF7C5CFF)],
                 icon: Icons.auto_awesome,
-                height: 190,
+                height: 182,
               ),
               const SizedBox(height: 20),
               _ClipCard(
@@ -55,7 +55,7 @@ class ClipHeaderPage extends StatelessWidget {
                 clipper: _WaveClipper(),
                 colors: const [Color(0xFF13B58A), Color(0xFF3BD5C0)],
                 icon: Icons.waves,
-                height: 200,
+                height: 192,
               ),
               const SizedBox(height: 20),
               _ClipCard(
@@ -64,7 +64,7 @@ class ClipHeaderPage extends StatelessWidget {
                 clipper: _InwardArcClipper(),
                 colors: const [Color(0xFFFF8B3D), Color(0xFFFFC24B)],
                 icon: Icons.local_fire_department,
-                height: 190,
+                height: 182,
               ),
             ],
           ),
@@ -199,7 +199,7 @@ class _ClipCard extends StatelessWidget {
   }
 }
 
-/// 右下角斜切：底边从 70% 处斜向右下，切掉一个三角函数状的角。
+/// 右下角斜切：底边从 58% 处斜向左下，切掉一个斜三角。
 class _DiagonalClipper extends CustomClipper<Path> {
   _DiagonalClipper(this.cut);
 
@@ -211,7 +211,7 @@ class _DiagonalClipper extends CustomClipper<Path> {
     path.moveTo(0, 0);
     path.lineTo(size.width, 0);
     path.lineTo(size.width, size.height - cut);
-    path.lineTo(size.width * 0.62, size.height);
+    path.lineTo(size.width * 0.58, size.height);
     path.lineTo(0, size.height);
     path.close();
     return path;
@@ -226,18 +226,19 @@ class _WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path();
-    path.lineTo(0, size.height - 18);
+    path.moveTo(0, 0);
+    path.lineTo(0, size.height - 22);
     path.quadraticBezierTo(
       size.width * 0.25,
-      size.height - 46,
+      size.height - 66,
       size.width * 0.5,
-      size.height - 18,
+      size.height - 22,
     );
     path.quadraticBezierTo(
       size.width * 0.75,
-      size.height + 8,
+      size.height + 16,
       size.width,
-      size.height - 22,
+      size.height - 30,
     );
     path.lineTo(size.width, 0);
     path.close();
@@ -258,7 +259,7 @@ class _InwardArcClipper extends CustomClipper<Path> {
     path.lineTo(size.width, size.height);
     path.quadraticBezierTo(
       size.width * 0.5,
-      size.height - 52,
+      size.height - 78,
       0,
       size.height,
     );

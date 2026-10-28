@@ -56,13 +56,13 @@ class _FlexSectionState extends State<FlexSection> {
             _FlexRow(
               label: '内容超长',
               flexes: const [2, 1, 1],
-              middleText: '这是一段故意写得很长的内容用来把那一栏塞满并溢出',
+              overflowDemo: true,
             ),
             const SizedBox(height: 10),
             const Text(
-              '现象：中间栏宽度由 flex 决定，长文本不换行就顶出了这一栏的边界，'
-              '调试模式下出现黄黑斜纹。说明"约束给多少就只能用多少"，'
-              '内容超过约束时需要自己选策略（换行、省略号或 FittedBox 缩放），'
+              '现象：中间栏的宽度由 flex 决定，里面四个固定宽度的小块加起来超过了这一栏的约束，'
+              '于是调试模式下出现黄黑斜纹，提醒"约束给多少就只能用多少"。'
+              '内容超过约束时要自己选策略（换行、省略号或 FittedBox 缩放），'
               '而不是指望 Expanded 自动兜底。',
               style: TextStyle(fontSize: 12, height: 1.7, color: Color(0xFF7A8194)),
             ),
@@ -74,11 +74,15 @@ class _FlexSectionState extends State<FlexSection> {
 }
 
 class _FlexRow extends StatelessWidget {
-  const _FlexRow({required this.label, required this.flexes, this.middleText});
+  const _FlexRow({
+    required this.label,
+    required this.flexes,
+    this.overflowDemo = false,
+  });
 
   final String label;
   final List<int> flexes;
-  final String? middleText;
+  final bool overflowDemo;
 
   @override
   Widget build(BuildContext context) {
@@ -107,17 +111,31 @@ class _FlexRow extends StatelessWidget {
                       color: palette[i],
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text(
-                      i == 1 && middleText != null
-                          ? middleText!
-                          : 'flex ${flexes[i]}',
-                      softWrap: !(i == 1 && middleText != null),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    // 中间栏打开"超长内容"时，塞进一排固定宽度的小块：
+                    // 它们的总宽度超过这一栏的约束，就会把这一栏撑破。
+                    child: i == 1 && overflowDemo
+                        ? Row(
+                            children: [
+                              for (var k = 0; k < 4; k++)
+                                Container(
+                                  width: 52,
+                                  height: 22,
+                                  margin: const EdgeInsets.only(right: 4),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0x73FFFFFF),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                            ],
+                          )
+                        : Text(
+                            'flex ${flexes[i]}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                   ),
                 ),
             ],
